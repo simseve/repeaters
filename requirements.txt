@@ -1,3 +1,6 @@
 pandas
 xlrd
 flask
+gunicorn
+uwsgi
+Flask-SQLAlchemy

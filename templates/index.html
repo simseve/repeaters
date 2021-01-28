@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>IK2ANE Real time processing</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+<!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+    $(document).ready(function(){
+      $("#myInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+    </script>
+    <style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+
+
+    </style>
+  
+</head>
+  <body>
+    <div class="container col-md-9 mt-4 bg-dark text-white text-center">
+     <header> <h1 class=" pt-4">This is an extract from <a href="http://www.ik2ane.it/ham.htm">IK2ANE</a> list of Repeaters in Italy</h1></header>
+      <h4 class="p-4">Using Python Pandas to read IK2ANE xls directly from the url and store it in sqlite3. Then using Python Flask hosted by Heroku for this page</h4>
+    </div>
+    <div class="container col-md-9 mt-4">
+      <h3>Search in the table:</h3>
+      <div class="input-group mb-3 my-4">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">Search</span>
+        </div>
+        <input id="myInput" type="text" class="form-control"  aria-label="Username" aria-describedby="basic-addon1" >
+      </div>
+    </div>
+    <div class="container col-md-9 mt-4" style="height:800px;overflow:auto;">
+    <table class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+      <thead class="bg-success">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Frequency</th>
+          <th scope="col">Shift</th>
+          <th scope="col">Tone</th>
+          <th scope="col">Region</th>
+          <th scope="col">Province</th>
+          <th scope="col">Place</th>
+          <th scope="col">Technology</th>
+          <th scope="col">Repeater ID</th>
+          <th scope="col">Node Number</th>
+          <th scope="col">Rete</th>
+          <th scope="col">Locator</th>
+          <th scope="col">Managed by</th>
+        </tr>
+      </thead>
+      <tbody id="myTable">
+        {% for ponte in ponti %}
+        <tr>
+          <th scope="row">{{ loop.index }}</th>
+          {% for x in range (1, (ponte|length)) %}
+          <td>{{ ponte[x] }}</td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+<!-- Footer -->
+<footer class="bg-light text-center text-lg-start">
+  <!-- Grid container -->
+  <div class="container col-md-9 mt-4">
+
+  <!-- Copyright -->
+      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+        © 2021 Copyright:
+        <a class="text-dark" >@HB9HCM @IZ1VCX</a>
+      </div>
+  <!-- Copyright -->
+</div>
+</footer>
+<!-- Footer -->
+  </body>
+</html>

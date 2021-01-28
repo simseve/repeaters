@@ -4,3 +4,4 @@ flask
 gunicorn
 uwsgi
 Flask-SQLAlchemy
+apscheduler

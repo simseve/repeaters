@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>IK2ANE Real time processing</title>
+    <title>IK2ANE Repeaters</title>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta
@@ -50,19 +50,16 @@
     <div class="container col mt-4 bg-dark text-white text-center">
       <header>
         <h1 class="pt-4">
-          This is an extract from
-          <a href="http://www.ik2ane.it/ham.htm">IK2ANE</a> list of Repeaters in
+          <a href="http://www.ik2ane.it/ham.htm">IK2ANE</a> Repeaters's list in
           Italy and some in Switzerland/France
         </h1>
       </header>
       <h6 class="p-4">
-        Using Python Pandas to read IK2ANE xls directly from the url and store
-        it in sqlite3. After a quick clean up then published using Python Flask
-        hosted by Heroku and protected by Cloudfare over a ssl connection.
+        Made in Python using Pandas and Flask modules
       </h6>
     </div>
     <div class="container col mt-4">
-      <h3>Search in the table with any keyword:</h3>
+      <h6>Last import: <strong>{{ update.strftime("%m/%d/%Y %H:%M:%S") }}</strong></h6>
       <div class="input-group mb-3 my-4">
         <div class="input-group-prepend">
           <span class="input-group-text" id="basic-addon1">Search</span>

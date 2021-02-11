@@ -3,11 +3,14 @@ from create_db import import_list
 import sqlite3
 import atexit
 from apscheduler.schedulers.background import BackgroundScheduler
+import datetime
 
 app = Flask(__name__)
 
 scheduler = BackgroundScheduler()
 scheduler.add_job(func=import_list, trigger="interval", weeks=1)
+global update 
+update = datetime.datetime.now()
 scheduler.start()
 
 # Shut down the scheduler when exiting the app
@@ -28,7 +31,8 @@ def index():
     cur.execute('SELECT * FROM ponti')
     ponti = cur.fetchall()
 
-    return render_template('index.html', ponti=ponti)
+
+    return render_template('index.html', ponti=ponti, update=update)
 
 if __name__ == '__main__':
     app.run()

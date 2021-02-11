@@ -1,6 +1,7 @@
 import pandas as pd
 from sqlalchemy import create_engine
 
+
 def import_list(force=''):
     engine = create_engine('sqlite:///app.db', echo=False)
 

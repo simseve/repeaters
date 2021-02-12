@@ -1,38 +1,56 @@
-from flask import Flask, render_template, request, redirect
-from create_db import import_list
+from flask import Flask, render_template
 import sqlite3
 import atexit
-from apscheduler.schedulers.background import BackgroundScheduler
+from flask_apscheduler import APScheduler
+import datetime
+import pandas as pd
+from sqlalchemy import create_engine
 import datetime
 
 app = Flask(__name__)
 
-scheduler = BackgroundScheduler()
-scheduler.add_job(func=import_list, trigger="interval", weeks=1)
-global update 
-update = datetime.datetime.now()
+last_import = datetime.datetime.now()
+
+scheduler = APScheduler()
+scheduler.api_enabled = True
+scheduler.init_app(app)
 scheduler.start()
 
 # Shut down the scheduler when exiting the app
 atexit.register(lambda: scheduler.shutdown())
 
-# @app.before_request
-# def before_request():
-#     if request.url.startswith('http://'):
-#         url = request.url.replace('http://', 'https://', 1)
-#         code = 301
-#         return redirect(url, code=code)
+
+@scheduler.task('interval', id='import_1', weeks=1)
+def import_list():
+
+    global last_import 
+
+    engine = create_engine('sqlite:///app.db', echo=False)
+
+    url = 'http://www.ik2ane.it/pontixls.xls'
+    df = pd.read_excel(url)
+    # %%
+    df = df.dropna(subset=['(F)req'])
+    # %%
+    df = df.drop(['Agg.', '(K)m', 'Gradi', '(O)rdkey', 'JN45OL'], axis=1)
+    # %%
+    df.dropna(subset=['(N)ome'], inplace=True)
+
+    # Write to SQL
+    df.to_sql('ponti', con=engine, if_exists='replace')
+
+    last_import = datetime.datetime.now()
+
 
 @app.route('/')
 def index():
+    # global last_import
     # Connecting to a template (html file)
     conn = sqlite3.connect('app.db')
     cur = conn.cursor()
     cur.execute('SELECT * FROM ponti')
     ponti = cur.fetchall()
-
-
-    return render_template('index.html', ponti=ponti, update=update)
+    return render_template('index.html', ponti=ponti, update=last_import)
 
 if __name__ == '__main__':
     app.run()

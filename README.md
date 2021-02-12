@@ -4,9 +4,9 @@ This web app download the latest list of Ham Radio repeaters in Italy from www.i
 
 # Installation
 
-sudo pip install -r requirements.txt
+`sudo pip install -r requirements.txt`
 
 # Launch
 
-`export FLASK_APP=app
-flask app.py`
+`export FLASK_APP=app`
+`flask app.py`

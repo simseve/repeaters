@@ -8,5 +8,5 @@ sudo pip install -r requirements.txt
 
 # Launch
 
-export FLASK_APP=app
-flask app.py
+`export FLASK_APP=app
+flask app.py`

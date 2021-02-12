@@ -9,4 +9,5 @@ This web app download the latest list of Ham Radio repeaters in Italy from www.i
 # Launch
 
 `export FLASK_APP=app`
+
 `flask app.py`

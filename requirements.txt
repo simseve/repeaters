@@ -2,6 +2,6 @@ pandas
 xlrd
 flask
 gunicorn
-uwsgi
+# uwsgi
 Flask-SQLAlchemy
 Flask-APScheduler

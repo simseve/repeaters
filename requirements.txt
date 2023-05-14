@@ -5,3 +5,7 @@ gunicorn
 # uwsgi
 Flask-SQLAlchemy
 Flask-APScheduler
+fastapi
+uvicorn
+slowapi
+sqlalchemy_utils

@@ -11,3 +11,7 @@ This web app download the latest list of Ham Radio repeaters in Italy from www.i
 `export FLASK_APP=app`
 
 `flask app.py`
+
+# since I moved to uvicorn use this
+
+`uvicorn app:app --reload`

@@ -104,7 +104,7 @@ def import_list():
         # Write to SQL
         df.to_sql('ponti', con=conn, if_exists='replace')
 
-    last_import = datetime.datetime.now()
+    last_import = datetime.datetime.now(datetime.timezone.utc)
 
 @app.get("/data", dependencies=[Depends(get_token_header)])
 def get_data(db: Session = Depends(get_db)):

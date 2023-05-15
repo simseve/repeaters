@@ -99,8 +99,9 @@ def import_list():
         df = pd.read_excel(url)
                 # Use the rename function with a lambda function to replace brackets and convert to lowercase
         df.rename(columns=lambda x: x.replace('(', '').replace(')', '').lower(), inplace=True)
-        df = df.dropna(subset=['freq'])
-        df = df.drop(['agg.', 'km', 'gradi', 'ordkey', 'jn450l'], axis=1)
+
+        # df = df.dropna(subset=['req'])
+        df = df.drop(['agg.', 'km', 'gradi', 'ordkey', 'jn45ol'], axis=1)
         df.dropna(subset=['nome'], inplace=True)
 
 

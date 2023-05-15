@@ -10,4 +10,4 @@ services:
     environment:
       API_KEY: '643cd615b54b64e48a3fb8545de2d44c379d9798ba86e08c7b5559519dc050f3'
     ports:
-      - 5000:5000
+      - 5001:5000

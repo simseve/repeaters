@@ -15,3 +15,8 @@ This web app download the latest list of Ham Radio repeaters in Italy from www.i
 # since I moved to uvicorn use this
 
 `uvicorn app:app --reload`
+
+# Docker deployment
+`docker build -t repeaters .`
+
+`docker-compose up -d`

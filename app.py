@@ -16,10 +16,9 @@ from sqlalchemy_utils import database_exists, create_database
 
 from fastapi.middleware.cors import CORSMiddleware
 
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./app.db")
+DATABASE_URL = "sqlite:///./app.db"
 DATA_URL = 'http://www.ik2ane.it/pontixls.xls'
-API_KEY = '643cd615b54b64e48a3fb8545de2d44c379d9798ba86e08c7b5559519dc050f3'
-TRUSTED_DOMAIN = '4cae.l.time4vps.cloud'
+API_KEY = os.getenv("API_KEY")
 APP_NAME='repeaters'
 
 engine = create_engine(
@@ -31,9 +30,11 @@ app = FastAPI()
 
 templates = Jinja2Templates(directory="templates")
 
+origins = ['4cae.l.time4vps.cloud', 'localhost']
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["TRUSTED_DOMAIN"],  # Allows all origins change to TRUSTED DOMAIN
+    allow_origins=origins,  # Allows all origins change to TRUSTED DOMAIN
     allow_credentials=True,
     allow_methods=["*"],  # Allows all methods
     allow_headers=["*"],  # Allows all headers

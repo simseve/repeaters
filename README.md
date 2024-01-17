@@ -44,28 +44,12 @@ To set up and run the application, follow these steps:
 - **Access the Web Interface**: Open your browser and navigate to `http://localhost:8000`.
 - **Fetch Data via API**: Send a GET request to `http://localhost:8000/data` with the header `x-api-key: YOUR_API_KEY`.
 
-# Ham Radio Repeaters in Italy
 
-This web app download the latest list of Ham Radio repeaters in Italy from www.ik2ane.it and displays it online for easier consultation.
 
 ### Installation
 
-`sudo pip install -r requirements.txt`
-
-### Launch
-
-`export FLASK_APP=app`
-
-`flask app.py`
-
-### since I moved to uvicorn use this
-
-`uvicorn app:app --reload`
-
 #### Docker deployment
-`docker build -t repeaters .`
-
-`docker-compose up -d`
+- `docker compose up -d --build --no-deps --force-recreate`
 
 
 ## API Endpoints
@@ -87,7 +71,4 @@ Logs are written to `[APP_NAME].log`. Each session has a unique session ID for e
 
 ## Contact
 
-[Your Contact Information]
-```
-
-Feel free to customize the `README.md` file to include any additional information, instructions, or contact details specific to your project.
+severini.simone@gmail.com

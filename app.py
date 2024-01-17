@@ -129,7 +129,19 @@ def index(request: Request, db: Session = Depends(get_db)):
     rows = result.fetchall()
     return templates.TemplateResponse("index.html", {"request": request, "ponti": rows, "update": last_import})
 
-
+# @app.post("/trigger-import", dependencies=[Depends(get_token_header)])
+@app.post("/trigger-import")
+async def trigger_import():
+    try:
+        import_list()  # Call the function to import the list
+        logger.info(f"[Session ID: {session_id}] Manual import triggered and completed.")
+        return {"message": "Import triggered successfully", "last_import": last_import}
+    except Exception as e:
+        logger.error(f"[Session ID: {session_id}] Error during manual import: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="An error occurred during the import."
+        )
 
 # Log the startup message
 logger.info(f"[Session ID: {session_id}] Starting the application...")

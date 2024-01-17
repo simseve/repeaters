@@ -13,12 +13,16 @@ import pandas as pd
 from typing import List, Optional
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy_utils import database_exists, create_database
-
+import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
+
+load_dotenv()
 
 DATABASE_URL = "sqlite:///./app.db"
 DATA_URL = 'http://www.ik2ane.it/pontixls.xls'
 API_KEY = os.getenv("API_KEY")
+
 APP_NAME='repeaters'
 
 engine = create_engine(
@@ -102,7 +106,7 @@ def import_list():
         df.rename(columns=lambda x: x.replace('(', '').replace(')', '').lower(), inplace=True)
 
         # df = df.dropna(subset=['req'])
-        df = df.drop(['agg.', 'km', 'gradi', 'ordkey', 'jn45ol'], axis=1)
+        df = df.drop(['km', 'gradi', 'ordkey', 'jn45ol'], axis=1)
         df.dropna(subset=['nome'], inplace=True)
 
 
@@ -129,8 +133,8 @@ def index(request: Request, db: Session = Depends(get_db)):
     rows = result.fetchall()
     return templates.TemplateResponse("index.html", {"request": request, "ponti": rows, "update": last_import})
 
-# @app.post("/trigger-import", dependencies=[Depends(get_token_header)])
-@app.post("/trigger-import")
+@app.post("/trigger-import", dependencies=[Depends(get_token_header)])
+# @app.post("/trigger-import")
 async def trigger_import():
     try:
         import_list()  # Call the function to import the list
@@ -145,4 +149,8 @@ async def trigger_import():
 
 # Log the startup message
 logger.info(f"[Session ID: {session_id}] Starting the application...")
+
+
+if __name__ == "__main__":
+    uvicorn.run("app:app", host="0.0.0.0", port=8000, reload=True)
 

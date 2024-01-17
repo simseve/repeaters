@@ -102,7 +102,10 @@ def import_list():
     with engine.begin() as conn:
         url = DATA_URL
         df = pd.read_excel(url)
-                # Use the rename function with a lambda function to replace brackets and convert to lowercase
+        # Drop the first column
+        df.drop(df.columns[0], axis=1, inplace=True)        
+        
+        # Use the rename function with a lambda function to replace brackets and convert to lowercase
         df.rename(columns=lambda x: x.replace('(', '').replace(')', '').lower(), inplace=True)
 
         # df = df.dropna(subset=['req'])
